@@ -1,4 +1,7 @@
 
+.location-text {
+    font-size: 25px;
+}
 .current-weather {
     padding: 10px 20px;
     display: flex;
@@ -16,4 +19,14 @@
 }
 .temps div {
     display: flex;
+}
+
+.humidity div{
+    margin: 20px 0px;
+}
+
+.humidity img {
+    width: 40px;
+    height: 40px;
+    filter: invert(100%);
 }

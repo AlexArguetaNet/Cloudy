@@ -6,21 +6,35 @@ import { useEffect, useState } from 'react';
 import sunny from "./assets/sunny.jpg";
 import rain from "./assets/rain.jpg";
 import cloudy from "./assets/cloudy.jpg";
+import mist from "./assets/mist.jpg";
 
 function App() {
 
   const [currWeather, setCurrWeather] = useState({});
-  const [backgorund, setBackground] = useState({});
+  const [background, setBackground] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const myStyle = {
-    backgroundImage: `url(${backgorund})`,
+    backgroundImage: `url(${background})`,
     backgroundRepeat: "no-repeat",
     height: "100%",
     backgroundSize: "cover"
   }
 
 
+  function showLoadingModal() {
+    return (
+      <div className="loading">
+        <h3>Loading</h3>
+        <div className="lds-dual-ring"></div>
+      </div>
+    );
+  }
+
+
   function getWeather(city: string) {
+
+    setLoading(true);
 
     axios.post("http://localhost:4001/", { city: city.split(' ').join('+') })
     .then((res: AxiosResponse) => {
@@ -31,11 +45,13 @@ function App() {
 
         let icon = res.data.current.weather[0].main
 
-        // Change background accroding to forecast
+        // Change background according to forecast
         if (icon == "Rain") {
           setBackground(rain);
         } else if (icon == "Clouds") {
           setBackground(cloudy);
+        } else if (icon == "Mist") {
+          setBackground(mist);
         } else {
           setBackground(sunny)
         }
@@ -45,6 +61,8 @@ function App() {
         window.localStorage.setItem("city", city);
 
       }
+
+      setLoading(false);
 
     })
     .catch(err => console.log(err));
@@ -61,12 +79,15 @@ function App() {
   }, []);
 
   return (
+    // Set the background images according to the current forecast
       <div className="app" style={myStyle}>
+
+        { loading && showLoadingModal() }
         
         <Navbar  getWeather={getWeather}/>
         <div className="weather-container">
 
-          {/* Only render UI when weather data has been recieved */}
+          {/* Only render UI when weather data has been received */}
           { Object.keys(currWeather).length !== 0 && <CurrentWeather data={currWeather}/> }
 
         </div>

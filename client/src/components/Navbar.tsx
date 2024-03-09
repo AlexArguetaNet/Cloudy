@@ -26,10 +26,11 @@ export const Navbar = (props: { getWeather: (city: string) => void}) => {
                 <h2>Cloudy <FontAwesomeIcon icon={faSun}/></h2>
                 <div>
                     <input type="text" 
+                        name="city"
                         value={city} 
                         onKeyDown={(event) => handleKeyboardSubmit(event)} 
                         onChange={(event) => setCity(event.target.value)} 
-                        placeholder="Enter city" 
+                        placeholder="Enter city name" 
                         required
                     />
                     <button onClick={() => handleClickSubmit()}><FontAwesomeIcon icon={faMagnifyingGlass}/></button>

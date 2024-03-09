@@ -19,7 +19,7 @@ export const getWeather = async (req: Request, res: Response): Promise<Response<
 
     } catch(err) {
         if (err instanceof Error) {
-            console.log(err);
+            console.log(err.message);
         }
         return res.json({ error: err, msg: "No results"});
     }

@@ -1,13 +1,15 @@
 import "../styles/CurrentWeather.css"
+import humidity from "../assets/humidity.png";
+import pressure from "../assets/pressure.png";
 
-export const CurrentWeather = (props: { data: any}) => {
+export const CurrentWeather = (props: { data: any }) => {
 
     const weather = props.data;
 
     return (
         <div className="current-weather weather container">
             <div className="curr-data temps">
-                <p>{weather.name}</p>
+                <p className="location-text">{weather.name}</p>
                 <img src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`} alt="img"/>
                 <p>{weather.main.temp} &deg;</p>
                 <p>{weather.weather[0].main}</p>
@@ -17,8 +19,16 @@ export const CurrentWeather = (props: { data: any}) => {
                 </div>
             </div>
             <div className="curr-data humidity">
-                <p>Humidity: {weather.main.humidity}%</p>
-                <p>Pressure: {weather.main.pressure} inHg</p>
+                <div>
+                    <img src={humidity} alt="icon" />
+                    <h3>Humidity</h3>
+                    <p>{weather.main.humidity}%</p>
+                </div>
+                <div>
+                    <img src={pressure} alt="icon" />
+                    <h3>Pressure</h3>
+                    <p>{weather.main.pressure}</p>
+                </div>
             </div>
         </div>
     );
