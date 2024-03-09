@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
 import axios from "axios";
 
-// GET: Get current and 5-day forecast
+// POST: Get current and 5-day forecast based on user's searched city name
 export const getWeather = async (req: Request, res: Response): Promise<Response<any, Record<string, any>>> => {
 
     const apiKey = process.env.API_KEY;
-    const city = "Charlotte";
+    const { city } = req.body || "Charlotte";
 
     try {
 

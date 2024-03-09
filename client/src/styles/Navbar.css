@@ -1,6 +1,31 @@
-
+* {
+    color: white;
+}
 .navbar {
+    padding: 10px;
+}
+.links {
     display: flex;
-    margin: 10px 20px;
     justify-content: space-between;
+    align-items: center;
+    max-width: 900px;
+    width: 80%;
+    margin: 0px auto;
+}
+
+input[type=text] {
+    margin-right: 10px;
+    padding: 3px 5px;
+    background-color: transparent;
+    border-bottom: 2px solid white;
+    border-radius: 0px;
+    color: white;
+}
+::placeholder {
+    color: white;
+}
+
+
+button {
+    background: transparent;
 }
