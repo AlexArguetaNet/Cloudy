@@ -1,3 +1,9 @@
 body{
   background-color: rgb(220, 220, 255);
 }
+
+.weather-container {
+  max-width: 800px;
+  width: 80%;
+  margin: 0px auto;
+}

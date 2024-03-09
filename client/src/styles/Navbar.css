@@ -3,6 +3,7 @@
 }
 .navbar {
     padding: 10px;
+    margin-bottom: 10px;
 }
 .links {
     display: flex;
@@ -22,7 +23,7 @@ input[type=text] {
     color: white;
 }
 ::placeholder {
-    color: white;
+    color: rgba(221, 221, 221, 0.7);
 }
 
 

@@ -1,36 +1,51 @@
 import './styles/App.css'
 import { Navbar } from './components/Navbar'
-import axios from "axios";
-import { useState } from 'react';
+import { CurrentWeather } from './components/CurrentWeather';
+import axios, { AxiosResponse } from "axios";
+import { useEffect, useState } from 'react';
 
 function App() {
 
-  const [city, setCity] = useState("");
+  const [currWeather, setCurrWeather] = useState({});
 
-  function getWeather(event: React.FormEvent<HTMLFormElement>) {
+  function getWeather(city: string) {
 
-    event.preventDefault();
-    let searchKey: string;
+    axios.post("http://localhost:4001/", { city })
+    .then((res: AxiosResponse) => {
 
-    // Set default city if there is none
-    city === "" ? searchKey = "Charlotte" : searchKey = city;
+      if (res.data.error) {
+        alert(res.data.msg);
+      } else {
 
-    axios.post("http://localhost:4001/", { city: searchKey })
-    .then((response) => {
+        // Get current and fiveDay weather data from response
+        setCurrWeather(res.data.current);
 
-      console.log(response.data);
-      setCity("");
+      }
 
     })
-    .catch(err => alert(err));
+    .catch(err => console.log(err));
     
   }
+
+
+  // Get weather data on initial render
+  useEffect(() => {
+    getWeather("Charlotte");
+  }, []);
 
   return (
     <>
       <div className="app">
         
-        <Navbar city={city} setCity={setCity} onSubmit={getWeather}/>
+        <Navbar  getWeather={getWeather}/>
+
+        <div className="weather-container">
+
+          {/* Only render UI when weather data has been recieved */}
+          { Object.keys(currWeather).length !== 0 && <CurrentWeather data={currWeather}/> }
+
+        </div>
+        
 
       </div>
     </>
