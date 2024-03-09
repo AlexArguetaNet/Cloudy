@@ -1,0 +1,19 @@
+
+.current-weather {
+    padding: 10px 20px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.curr-data {
+    margin: 30px 100px;
+    text-align: center;
+}
+
+.temps p {
+    margin-bottom: 10px;
+}
+.temps div {
+    display: flex;
+}

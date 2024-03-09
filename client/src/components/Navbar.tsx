@@ -8,12 +8,12 @@ export const Navbar = (props: { getWeather: (city: string) => void}) => {
     const [city, setCity] = useState("");
     // const [currWeather, setCurrWeather] = useState(null);
 
-    function handleClickSubmit() {
+    function handleClickSubmit(): void {
         props.getWeather(city)
         setCity("")
     }
 
-    function handleKeyboardSubmit(event: React.KeyboardEvent<HTMLInputElement>) {
+    function handleKeyboardSubmit(event: React.KeyboardEvent<HTMLInputElement>): void {
         if (event.key === "Enter") {
             props.getWeather(city);
             setCity("");
@@ -25,7 +25,13 @@ export const Navbar = (props: { getWeather: (city: string) => void}) => {
             <div className="links">
                 <h2>Cloudy <FontAwesomeIcon icon={faSun}/></h2>
                 <div>
-                    <input type="text" value={city} onKeyDown={(event) => handleKeyboardSubmit(event)} onChange={(event) => setCity(event.target.value)} placeholder="Enter city" required/>
+                    <input type="text" 
+                        value={city} 
+                        onKeyDown={(event) => handleKeyboardSubmit(event)} 
+                        onChange={(event) => setCity(event.target.value)} 
+                        placeholder="Enter city" 
+                        required
+                    />
                     <button onClick={() => handleClickSubmit()}><FontAwesomeIcon icon={faMagnifyingGlass}/></button>
                 </div>
             </div>

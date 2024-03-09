@@ -29,4 +29,9 @@ input[type=text] {
 
 button {
     background: transparent;
+    border-radius: 80px;
+    padding: 5px;
+}
+button:hover {
+    background-color: rgba(202, 202, 202, 0.7);
 }

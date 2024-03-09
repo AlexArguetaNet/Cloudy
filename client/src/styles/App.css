@@ -1,9 +1,21 @@
 body{
-  background-color: rgb(220, 220, 255);
+  background-color: rgb(53, 53, 53);
+}
+
+.app {
+  height: 100%;
 }
 
 .weather-container {
   max-width: 800px;
   width: 80%;
   margin: 0px auto;
+}
+
+.container {
+  background-color: rgba(14, 14, 14, 0.7);
+  backdrop-filter: blur(4px);
+}
+.weather {
+  border-radius: 5px;
 }

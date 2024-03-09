@@ -5,7 +5,7 @@
     margin: 0px;
     padding: 0px;
 }
-html {
+html, body, #root {
     height: 100%;
 }
 
@@ -17,14 +17,7 @@ input {
 button {
     border: none;
     cursor: pointer;
-    border-radius: 5px;
 }
 a {
     text-decoration: none;
-}
-.container {
-    background-color: rgba(0, 0, 0, .5);
-}
-.weather {
-    border-radius: 5px;
 }
