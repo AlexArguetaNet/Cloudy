@@ -3,10 +3,11 @@
     font-size: 25px;
 }
 
-.current-weather .container .curr-data .title {
+.current-weather .content .title {
     position: absolute;
     border-bottom: 2px solid white;
-    top: 10px;
+    top: 15px;
+    left: 20px;
 }
 
 .current-weather .content {
@@ -23,7 +24,7 @@
 
 .curr-data {
     text-align: center;
-
+    margin-top: 40px;
 }
 
 .main p {
@@ -34,7 +35,6 @@
 }
 
 .temps {
-    margin: 20px 0px;
     display: flex;
     flex-direction: column;
     justify-content: center;

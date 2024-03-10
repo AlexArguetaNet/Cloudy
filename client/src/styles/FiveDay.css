@@ -3,9 +3,15 @@
     display: flex;
     justify-content: space-between;
     text-align: center;
-    padding: 40px 20px;
+    padding: 85px 20px 60px 20px;
     margin-bottom: 30px;
     overflow:auto;
+}
+
+.five-day .title {
+    position: absolute;
+    top: 20px;
+    border-bottom: 1px solid white;
 }
 
 .five-day img {
@@ -20,4 +26,5 @@
 
 .five-day div:last-child {
     border-right: none;
+    margin-right: 0px;
 }

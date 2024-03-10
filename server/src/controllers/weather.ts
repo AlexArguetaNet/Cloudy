@@ -27,7 +27,10 @@ export const getWeather = async (req: Request, res: Response): Promise<Response<
         // Response contains daily forecast
         const weatherData = await axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${geoLocation.data[0].lat}&lon=${geoLocation.data[0].lon}&units=imperial&cnt=5&appid=${apiKey}`);
         // Extract then splice daily forecast array to get forecast for next 5 days instead of 8
-        const fiveDay: object[] = weatherData.data.daily.splice(-5);
+        const fiveDay: object[] = weatherData.data.daily;
+        fiveDay.pop();
+        fiveDay.pop();
+        fiveDay.pop();
 
 
         return res.json({ location, current: current.data, fiveDay });
