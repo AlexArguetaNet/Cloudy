@@ -2,15 +2,23 @@
 .location-text {
     font-size: 25px;
 }
-.current-weather {
-    padding: 50px 20px;
+
+.current-weather .container .curr-data .title {
+    position: absolute;
+    border-bottom: 2px solid white;
+    top: 10px;
+}
+
+.current-weather .content {
+    padding: 20px 20px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
 }
-.current-weather div {
-    margin: 0px 60px;
+.current-weather .content .curr-data {
+    width: 50%;
+    /* background-color: rgba(130, 130, 130, 0.5); */
 }
 
 .curr-data {
@@ -25,8 +33,12 @@
     display: flex;
 }
 
-.temps div{
+.temps {
     margin: 20px 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .temps img {
@@ -36,9 +48,44 @@
     margin-bottom: 10px;
 }
 
-.temps .high-low {
+
+.wind, .high-low {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.wind div, .high-low div {
+    width: 90px;
+    margin: 5px 20px;
+}
+
+
+
+.current-weather .second-row {
+    margin-top: 5px;
     display: flex;
 }
-.temps .high-low div:last-child {
-    margin-left: 40px;
+
+.current-weather .second-row img {
+    filter: invert(100%);
+    width: 40px;
+    height: 40px;
+}
+
+.sun img {
+    margin-bottom: 10px;
+}
+.sun div:nth-child(2) {
+    margin-left: 50px
+}
+.sun {
+    display: flex;
+}
+
+.sun, .pressure, .visibility {
+    padding: 15px 20px;
+    margin-right: 10px;
+    text-align: center;
 }

@@ -6,7 +6,6 @@ import { useState } from "react";
 export const Navbar = (props: { getWeather: (city: string) => void}) => {
 
     const [city, setCity] = useState("");
-    // const [currWeather, setCurrWeather] = useState(null);
 
     function handleClickSubmit(): void {
         props.getWeather(city)
@@ -14,14 +13,14 @@ export const Navbar = (props: { getWeather: (city: string) => void}) => {
     }
 
     function handleKeyboardSubmit(event: React.KeyboardEvent<HTMLInputElement>): void {
-        if (event.key === "Enter") {
+        if (event.key === "Enter" && city.length != 0) {
             props.getWeather(city);
             setCity("");
         }
     }
 
     return (
-        <div className="navbar container">
+        <div className="navbar">
             <div className="links">
                 <h2>Cloudy <FontAwesomeIcon icon={faSun}/></h2>
                 <div>
