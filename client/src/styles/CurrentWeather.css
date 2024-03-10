@@ -89,5 +89,6 @@
 .sun, .pressure, .visibility, .feels-like {
     padding: 15px 20px;
     text-align: center;
-    margin: 0px 0px 10px 5px
+    margin: 0px 0px 10px 5px;
+    flex: 1;
 }
