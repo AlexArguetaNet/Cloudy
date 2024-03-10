@@ -7,6 +7,7 @@ import wind from "../assets/wind.png";
 import sunriseIcon from "../assets/sunrise.png";
 import sunsetIcon from "../assets/sunset.png";
 import visibility from "../assets/visibility.png";
+import cloudIcon from "../assets/cloud.png";
 
 export const CurrentWeather = (props: { data: any }) => {
 
@@ -87,9 +88,16 @@ export const CurrentWeather = (props: { data: any }) => {
                     <p>{weather.main.pressure} hpa</p>
                 </div>
                 <div className="visibility container">
-                    <p>Visibility</p>
-                    <img src={visibility} alt="visibility" />
-                    <p>{weather.visibility / 1000} km</p>
+                    <div>
+                        <p>Visibility</p>
+                        <img src={visibility} alt="visibility" />
+                        <p>{weather.visibility / 1000} km</p>
+                    </div>
+                    <div>
+                        <p>Cloudiness</p>
+                        <img src={cloudIcon} alt="cloud" />
+                        <p>{weather.clouds.all}%</p>
+                    </div>
                 </div>
 
             </div>

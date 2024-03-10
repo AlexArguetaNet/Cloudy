@@ -77,10 +77,10 @@
 .sun img {
     margin-bottom: 10px;
 }
-.sun div:nth-child(2) {
+.sun div:nth-child(2), .visibility div:nth-child(2) {
     margin-left: 50px
 }
-.sun {
+.sun, .visibility {
     display: flex;
 }
 
