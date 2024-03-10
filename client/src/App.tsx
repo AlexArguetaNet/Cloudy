@@ -50,7 +50,7 @@ function App() {
           setBackground(rain);
         } else if (icon == "Clouds") {
           setBackground(cloudy);
-        } else if (icon == "Mist") {
+        } else if (icon == "Mist" || icon == "Haze") {
           setBackground(mist);
         } else {
           setBackground(sunny)

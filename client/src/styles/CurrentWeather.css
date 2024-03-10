@@ -3,30 +3,42 @@
     font-size: 25px;
 }
 .current-weather {
-    padding: 10px 20px;
+    padding: 50px 20px;
     display: flex;
     justify-content: center;
+    align-items: center;
     flex-wrap: wrap;
+}
+.current-weather div {
+    margin: 0px 60px;
 }
 
 .curr-data {
-    margin: 30px 100px;
     text-align: center;
+
 }
 
-.temps p {
+.main p {
     margin-bottom: 10px;
 }
-.temps div {
+.main div {
     display: flex;
 }
 
-.humidity div{
+.temps div{
     margin: 20px 0px;
 }
 
-.humidity img {
+.temps img {
     width: 40px;
     height: 40px;
     filter: invert(100%);
+    margin-bottom: 10px;
+}
+
+.temps .high-low {
+    display: flex;
+}
+.temps .high-low div:last-child {
+    margin-left: 40px;
 }
