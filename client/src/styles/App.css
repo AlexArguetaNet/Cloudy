@@ -13,8 +13,8 @@ body{
 }
 
 .navbar, .container {
-  background-color: rgba(14, 14, 14, 0.7);
-  backdrop-filter: blur(4px);
+  background-color: rgba(14, 14, 14, 0.8);
+  backdrop-filter: blur(6px);
 }
 .container {
   border-radius: 20px;

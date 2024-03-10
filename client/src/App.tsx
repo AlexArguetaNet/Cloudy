@@ -7,6 +7,7 @@ import sunny from "./assets/sunny.jpg";
 import rain from "./assets/rain.jpg";
 import cloudy from "./assets/cloudy.jpg";
 import mist from "./assets/mist.jpg";
+import snowingNightPic from "./assets/n-snowing.jpg";
 
 function App() {
 
@@ -52,6 +53,8 @@ function App() {
           setBackground(cloudy);
         } else if (icon == "Mist" || icon == "Haze") {
           setBackground(mist);
+        } else if (icon == "Snow") {
+          setBackground(snowingNightPic);
         } else {
           setBackground(sunny)
         }
