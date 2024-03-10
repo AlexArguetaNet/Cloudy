@@ -18,7 +18,7 @@ function App() {
   const myStyle = {
     backgroundImage: `url(${background})`,
     backgroundRepeat: "no-repeat",
-    height: "100%",
+    height: "110%",
     backgroundSize: "cover"
   }
 

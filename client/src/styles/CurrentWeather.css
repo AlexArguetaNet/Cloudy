@@ -66,6 +66,8 @@
 .current-weather .second-row {
     margin-top: 5px;
     display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .current-weather .second-row img {
@@ -78,14 +80,14 @@
     margin-bottom: 10px;
 }
 .sun div:nth-child(2), .visibility div:nth-child(2) {
-    margin-left: 50px
+    margin-left: 30px
 }
 .sun, .visibility {
     display: flex;
 }
 
-.sun, .pressure, .visibility {
+.sun, .pressure, .visibility, .feels-like {
     padding: 15px 20px;
-    margin-right: 10px;
     text-align: center;
+    margin: 0px 0px 10px 5px
 }

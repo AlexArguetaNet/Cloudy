@@ -8,6 +8,7 @@ import sunriseIcon from "../assets/sunrise.png";
 import sunsetIcon from "../assets/sunset.png";
 import visibility from "../assets/visibility.png";
 import cloudIcon from "../assets/cloud.png";
+import feelsLike from "../assets/feels_like.png"
 
 export const CurrentWeather = (props: { data: any }) => {
 
@@ -98,6 +99,11 @@ export const CurrentWeather = (props: { data: any }) => {
                         <img src={cloudIcon} alt="cloud" />
                         <p>{weather.clouds.all}%</p>
                     </div>
+                </div>
+                <div className="feels-like container">
+                    <p>Feels Like</p>
+                    <img src={feelsLike} alt="feels_like" />
+                    <p>{Math.floor(weather.main.feels_like)}&deg;</p>
                 </div>
 
             </div>
