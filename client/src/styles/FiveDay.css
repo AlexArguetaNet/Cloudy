@@ -1,0 +1,23 @@
+
+.five-day {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    padding: 40px 20px;
+    margin-bottom: 30px;
+    overflow:auto;
+}
+
+.five-day img {
+    width: 60px;
+}
+
+.five-day .list-item {
+    padding-right: 30px;
+    margin: 0px 20px;
+    border-right: 1px solid rgb(59, 59, 59);
+}
+
+.five-day div:last-child {
+    border-right: none;
+}

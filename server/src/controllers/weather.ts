@@ -11,11 +11,26 @@ export const getWeather = async (req: Request, res: Response): Promise<Response<
 
     try {
 
-        const current = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city},us&units=imperial&&appid=${apiKey}`);
-        const fiveDay = await axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${city},us&units=imperial&cnt=5&appid=${apiKey}`);
-        const weather = {current: current.data, fiveDay: fiveDay.data};
+        // Get geolocation
+        const geoLocation = await axios.get(`http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${apiKey}`);
 
-        return res.json(weather);
+        // Create location object
+        const location = { 
+            name: geoLocation.data[0].name, 
+            country: geoLocation.data[0].country, 
+            state: geoLocation.data[0].state || "" // Incase no state attribute is returned from API call
+        }
+
+        // Get current forecast
+        const current = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${geoLocation.data[0].lat}&lon=${geoLocation.data[0].lon}&units=imperial&appid=${apiKey}`);
+
+        // Response contains daily forecast
+        const weatherData = await axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${geoLocation.data[0].lat}&lon=${geoLocation.data[0].lon}&units=imperial&cnt=5&appid=${apiKey}`);
+        // Extract then splice daily forecast array to get forecast for next 5 days instead of 8
+        const fiveDay: object[] = weatherData.data.daily.splice(-5);
+
+
+        return res.json({ location, current: current.data, fiveDay });
 
     } catch(err) {
         if (err instanceof Error) {

@@ -1,6 +1,7 @@
 import './styles/App.css'
 import { Navbar } from './components/Navbar'
 import { CurrentWeather } from './components/CurrentWeather';
+import { FiveDay } from './components/FiveDay';
 import axios, { AxiosResponse } from "axios";
 import { useEffect, useState } from 'react';
 import sunny from "./assets/sunny.jpg";
@@ -12,13 +13,15 @@ import snowingNightPic from "./assets/n-snowing.jpg";
 function App() {
 
   const [currWeather, setCurrWeather] = useState({});
+  const [location, setLocation] = useState({});
+  const [fiveDay, setFiveDay] = useState({});
   const [background, setBackground] = useState({});
   const [loading, setLoading] = useState(false);
 
   const myStyle = {
     backgroundImage: `url(${background})`,
     backgroundRepeat: "no-repeat",
-    height: "110%",
+    height: "120%",
     backgroundSize: "cover"
   }
 
@@ -61,6 +64,8 @@ function App() {
 
         // Get current and fiveDay weather data from response
         setCurrWeather(res.data.current);
+        setLocation(res.data.location);
+        setFiveDay(res.data.fiveDay);
         window.localStorage.setItem("city", city);
 
       }
@@ -91,7 +96,12 @@ function App() {
         <div className="weather-container">
 
           {/* Only render UI when weather data has been received */}
-          { Object.keys(currWeather).length !== 0 && <CurrentWeather data={currWeather}/> }
+          { Object.keys(currWeather).length !== 0 && (
+            <>
+              <CurrentWeather weather={currWeather} location={location}/>
+              <FiveDay data={fiveDay}/>
+            </>
+          ) }
 
         </div>
         

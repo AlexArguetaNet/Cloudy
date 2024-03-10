@@ -10,9 +10,9 @@ import visibility from "../assets/visibility.png";
 import cloudIcon from "../assets/cloud.png";
 import feelsLike from "../assets/feels_like.png"
 
-export const CurrentWeather = (props: { data: any }) => {
+export const CurrentWeather = (props: { weather: any, location: any }) => {
 
-    const weather = props.data;
+    const { weather, location } = props;
 
     function getWindDirection(deg: number): string {
         if (deg >= 0 && deg <= 89) return "N";
@@ -36,7 +36,7 @@ export const CurrentWeather = (props: { data: any }) => {
             <div className="content container">
                 <div className="curr-data main">
                     <h2 className="title">Current Forecast</h2>
-                    <p className="location-text">{weather.name}</p>
+                    <p className="location-text">{location.name}</p>
                     <img src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`} alt="img"/>
                     <p>{weather.weather[0].main}</p>
                     <h2>{Math.floor(weather.main.temp)} &deg;</h2>
