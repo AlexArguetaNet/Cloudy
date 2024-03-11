@@ -1,10 +1,10 @@
 body{
-  background-color: rgb(53, 53, 53);
-}
-
-.app {
+  background-color: grey;
+  background-repeat: no-repeat;
+  background-size: cover;
   height: 100%;
 }
+
 
 .weather-container {
   max-width: 730px;

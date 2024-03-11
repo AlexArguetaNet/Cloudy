@@ -4,36 +4,21 @@ import { CurrentWeather } from './components/CurrentWeather';
 import { FiveDay } from './components/FiveDay';
 import axios, { AxiosResponse } from "axios";
 import { useEffect, useState } from 'react';
-import sunny from "./assets/sunny.jpg";
-import rain from "./assets/rain.jpg";
-import cloudy from "./assets/cloudy.jpg";
-import mist from "./assets/mist.jpg";
-import snowingNightPic from "./assets/n-snowing.jpg";
 
 function App() {
+
+  // TODO: Find images of one file extensions and conditionally render them
+  // according to the time of day/night
 
   const [currWeather, setCurrWeather] = useState({});
   const [location, setLocation] = useState({});
   const [fiveDay, setFiveDay] = useState({});
-  const [background, setBackground] = useState({});
   const [loading, setLoading] = useState(false);
+  
 
-  const myStyle = {
-    backgroundImage: `url(${background})`,
-    backgroundRepeat: "no-repeat",
-    height: "120%",
-    backgroundSize: "cover"
-  }
-
-
-  function showLoadingModal() {
-    return (
-      <div className="loading">
-        <h3>Loading</h3>
-        <div className="lds-dual-ring"></div>
-      </div>
-    );
-  }
+  // Apply background image to the body
+  const [imgUrl, setImgUrl] = useState("");
+  window.document.body.style.backgroundImage = `url(${imgUrl})`;
 
 
   function getWeather(city: string) {
@@ -47,20 +32,40 @@ function App() {
         alert(res.data.msg);
       } else {
 
-        let icon = res.data.current.weather[0].main
+        let cond: string;
+        let picTime: string;
 
-        // Change background according to forecast
-        if (icon == "Rain") {
-          setBackground(rain);
+        // Check current weather condition
+        let icon = res.data.current.weather[0].main
+        if (icon == "Clear") {
+          cond = "clear";
         } else if (icon == "Clouds") {
-          setBackground(cloudy);
-        } else if (icon == "Mist" || icon == "Haze") {
-          setBackground(mist);
+          cond = "clouds";
+        }  else if (icon == "Rain") {
+          cond = "rain";
         } else if (icon == "Snow") {
-          setBackground(snowingNightPic);
+          cond = "snow";
         } else {
-          setBackground(sunny)
+          cond = "none";
         }
+
+        // Get the date/time of the search location
+        const currDate = new Date(res.data.current.dt * 1000);
+        console.log(currDate);
+
+        console.log(currDate.getHours());
+      
+        // Check if it is day or night
+        if (currDate.getHours() >= 7 && currDate.getHours() <= 19) {
+          picTime = "day";
+        } else {
+          picTime = "night";
+        }
+
+
+        // Set background image URL
+        setImgUrl(`/src/assets/backgrounds/${cond}_${picTime}.jpg`);        
+
 
         // Get current and fiveDay weather data from response
         setCurrWeather(res.data.current);
@@ -71,11 +76,10 @@ function App() {
       }
 
       setLoading(false);
-
     })
     .catch(err => console.log(err));
-    
   }
+
 
 
   // Get weather data on initial render
@@ -86,9 +90,21 @@ function App() {
     
   }, []);
 
+  function showLoadingModal() {
+    return (
+      <div className="loading">
+        <h3>Loading</h3>
+        <div className="lds-dual-ring"></div>
+      </div>
+    );
+  }
+
+
+
+
   return (
     // Set the background images according to the current forecast
-      <div className="app" style={myStyle}>
+      <div className="app">
 
         { loading && showLoadingModal() }
         
@@ -104,8 +120,6 @@ function App() {
           ) }
 
         </div>
-        
-
       </div>
   )
 }

@@ -27,8 +27,6 @@ export const CurrentWeather = (props: { weather: any, location: any }) => {
         // TODO: Convert unix time into local time 
         const mDate = new Date(unixTime * 1000);
 
-        console.log(mDate.getUTCHours());
-
         return `${mDate.getHours()} : ${mDate.getMinutes()}`
 
     }
@@ -41,7 +39,7 @@ export const CurrentWeather = (props: { weather: any, location: any }) => {
                 <div className="curr-data main">
                     
                     <p className="location-text">{location.name}</p>
-                    <p>{location.country !== "" && <>{location.state},</>} {location.country}</p>
+                    <p>{location.state !== "" && <>{`${location.state},`}</>} {location.country}</p>
                     <img src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`} alt="img"/>
                     <p>{weather.weather[0].main}</p>
                     <h2>{Math.floor(weather.main.temp)} &deg;</h2>
