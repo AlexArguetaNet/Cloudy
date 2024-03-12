@@ -19,15 +19,6 @@ const ListItem = (props: { weather: any, index: number }) => {
 
     const day = props.weather;
     const { index } = props;
-
-    function getTimeStr(): string {
-        const currDate = new Date();
-        if (currDate.getHours() >= 7 && currDate.getHours() <= 18) {
-            return "Today";
-        } else {
-            return "Tonight";
-        }
-    }
     
     function getDayName(unixTime: number): string {
 
@@ -38,7 +29,7 @@ const ListItem = (props: { weather: any, index: number }) => {
 
     return (
         <div className="list-item">
-            <p>{ index == 0 ? getTimeStr() : getDayName(day.dt)}</p>
+            <p>{ index == 0 ? <>Today</> : getDayName(day.dt)}</p>
             <img src={`https://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`} alt="" />
             <p>{Math.floor(day.temp.day)}&deg;</p>
             <p>{day.weather[0].main}</p>

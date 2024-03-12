@@ -12,7 +12,7 @@ function App() {
   const [currWeather, setCurrWeather] = useState({});
   const [location, setLocation] = useState({});
   const [fiveDay, setFiveDay] = useState({});
-  const [loading, setLoading] = useState(false);  
+  const [loading, setLoading] = useState(false);
 
   // Apply background image to the body
   // Icon from response may help
@@ -120,7 +120,7 @@ function App() {
           { Object.keys(currWeather).length !== 0 && (
             <>
               <CurrentWeather weather={currWeather} location={location} />
-              <FiveDay data={fiveDay}/>
+              <FiveDay data={fiveDay} />
             </>
           ) }
 
