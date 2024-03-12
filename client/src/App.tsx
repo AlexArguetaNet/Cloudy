@@ -7,14 +7,12 @@ import { useEffect, useState } from 'react';
 
 function App() {
 
-  // TODO: Find images of one file extensions and conditionally render them
-  // according to the time of day/night
+  // TODO: COntinue finding day/night images for weather conditions
 
   const [currWeather, setCurrWeather] = useState({});
   const [location, setLocation] = useState({});
   const [fiveDay, setFiveDay] = useState({});
-  const [loading, setLoading] = useState(false);
-  
+  const [loading, setLoading] = useState(false);  
 
   // Apply background image to the body
   // Icon from response may help
@@ -53,23 +51,24 @@ function App() {
           cond = "none";
         }
 
-        // Get the date/time of the search location
-        // Unix time int must be multiplied by 1000
-        const currDate = new Date(res.data.current.dt * 1000);
 
+        let dt = res.data.current.dt;
+        let timezone = res.data.current.timezone;
+
+        // Get current time in target city
+        const utcSeconds = parseInt(dt) + parseInt(timezone);
+        const utcMilliseconds = utcSeconds * 1000;
+        const localDate = new Date(utcMilliseconds);
       
         // Check if it is day or night
-        if (currDate.getHours() >= 7 && currDate.getHours() <= 18) {
+        if (localDate.getUTCHours() >= 7 && localDate.getUTCHours() <= 18) {
           picTime = "day";
         } else {
           picTime = "night";
         }
 
-
         // Set background image URL
         setImgUrl(`/src/assets/backgrounds/${cond}_${picTime}.jpg`); 
-        console.log(icon);   
-        console.log(imgUrl);    
 
 
         // Get current and fiveDay weather data from response
@@ -120,7 +119,7 @@ function App() {
           {/* Only render UI when weather data has been received */}
           { Object.keys(currWeather).length !== 0 && (
             <>
-              <CurrentWeather weather={currWeather} location={location}/>
+              <CurrentWeather weather={currWeather} location={location} />
               <FiveDay data={fiveDay}/>
             </>
           ) }

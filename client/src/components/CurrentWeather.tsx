@@ -1,14 +1,14 @@
 import "../styles/CurrentWeather.css"
-import tempHigh from "../assets/temp_high.png";
-import tempLow from "../assets/temp_low.png";
-import humidity from "../assets/humidity.png";
-import pressure from "../assets/pressure.png";
-import wind from "../assets/wind.png";
-import sunriseIcon from "../assets/sunrise.png";
-import sunsetIcon from "../assets/sunset.png";
-import visibility from "../assets/visibility.png";
-import cloudIcon from "../assets/cloud.png";
-import feelsLike from "../assets/feels_like.png"
+import tempHigh from "../assets/icons/temp_high.png";
+import tempLow from "../assets/icons/temp_low.png";
+import humidity from "../assets/icons/humidity.png";
+import pressure from "../assets/icons/pressure.png";
+import wind from "../assets/icons/wind.png";
+import sunriseIcon from "../assets/icons/sunrise.png";
+import sunsetIcon from "../assets/icons/sunset.png";
+import visibility from "../assets/icons/visibility.png";
+import cloudIcon from "../assets/icons/cloud.png";
+import feelsLike from "../assets/icons/feels_like.png"
 
 export const CurrentWeather = (props: { weather: any, location: any }) => {
 
@@ -22,20 +22,25 @@ export const CurrentWeather = (props: { weather: any, location: any }) => {
         return "n/a";
     }
 
-    function getTime(unixTime: number): string {
+    function getTime(unixTime: number, isNight: boolean): string {
 
+        const utcSeconds = unixTime + parseInt(weather.timezone);
+        const utcMilliseconds = utcSeconds * 1000;
+        const localDate = new Date(utcMilliseconds);
 
-        // TODO: Convert unix time into local time 
-        const mDate = new Date(unixTime * 1000);
-        let localTime = mDate.getTime();
+        let hour = localDate.getUTCHours();
+        let minutes = localDate.getUTCMinutes().toString();
 
-        let localOffSet = mDate.getTimezoneOffset() * 60000;
-        let utc = localTime + localOffSet;
+        if (isNight) {
+            hour = hour - 12;
 
-        let currTime = utc + (1000 + weather.timezone);
-        let currDate = new Date(currTime);
+            if (hour == 0) hour = 12;
+            if (hour < 0) hour = hour * -1;
+        }
 
-        return `${mDate.getHours()} : ${mDate.getMinutes()}`
+        if (minutes.length == 1) minutes = `0${minutes}`;
+
+        return `${hour}: ${minutes}`;
 
     }
 
@@ -85,12 +90,12 @@ export const CurrentWeather = (props: { weather: any, location: any }) => {
                 <div className="sun container">
                     <div>
                         <img src={sunriseIcon} alt="" />
-                        <p>{getTime(parseInt(weather.sys.sunrise))} AM</p>
-                        <p>Sunirse</p>
+                        <p>{getTime(parseInt(weather.sys.sunrise), false)} AM</p>
+                        <p>Sunrise</p>
                     </div>
                     <div>
                         <img src={sunsetIcon} alt="" />
-                        <p>{getTime(parseInt(weather.sys.sunset))} PM</p>
+                        <p>{getTime(parseInt(weather.sys.sunset), true)} PM</p>
                         <p>Sunset</p>
                     </div>
                 </div>

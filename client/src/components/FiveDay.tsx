@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import "../styles/FiveDay.css";
 
 export const FiveDay = (props: { data: any }) => {
