@@ -1,7 +1,7 @@
 import "../styles/Navbar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass, faSun, faCaretDown } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const Navbar = (props: { getWeather: (city: string, units: string) => void }) => {
 
@@ -29,6 +29,11 @@ export const Navbar = (props: { getWeather: (city: string, units: string) => voi
         // Get weather with new units
         props.getWeather(window.localStorage.getItem("city") || "charlotte", window.localStorage.getItem("units") || "imperial");
     }
+
+    // Set the last units that were used
+    useEffect(() => {
+        setUnits(window.localStorage.getItem("units") || "imperial");
+    }, []);
 
     return (
         <div className="navbar">

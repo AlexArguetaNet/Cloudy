@@ -29,7 +29,7 @@ export const CurrentWeather = (props: { weather: any, location: any }) => {
 
     }
 
-    function getTime(unixTime: number, isNight: boolean): string {
+    function getTime(unixTime: number): string {
 
         const utcSeconds = unixTime + parseInt(weather.timezone);
         const utcMilliseconds = utcSeconds * 1000;
@@ -122,12 +122,12 @@ export const CurrentWeather = (props: { weather: any, location: any }) => {
                 <div className="sun container">
                     <div>
                         <img src={sunriseIcon} alt="" />
-                        <p>{getTime(parseInt(weather.sys.sunrise), false)}</p>
+                        <p>{getTime(parseInt(weather.sys.sunrise))}</p>
                         <p>Sunrise</p>
                     </div>
                     <div>
                         <img src={sunsetIcon} alt="" />
-                        <p>{getTime(parseInt(weather.sys.sunset), true)}</p>
+                        <p>{getTime(parseInt(weather.sys.sunset))}</p>
                         <p>Sunset</p>
                     </div>
                 </div>
