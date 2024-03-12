@@ -18,3 +18,13 @@ button {
 a {
     text-decoration: none;
 }
+
+body::-webkit-scrollbar{
+    width: 6px;
+}
+body::-webkit-scrollbar-track {
+    background: #494949;
+}
+body::-webkit-scrollbar-thumb {
+    background: #292929;
+}

@@ -5,7 +5,7 @@
     text-align: center;
     padding: 85px 20px 60px 20px;
     margin-bottom: 30px;
-    overflow:auto;
+    overflow: auto;
 }
 
 .five-day .title {
@@ -27,4 +27,18 @@
 
 .five-day div:last-child {
     border-right: none;
+}
+
+
+.five-day::-webkit-scrollbar {
+    height: 10px;
+    margin: 0px 20px;
+}
+.five-day::-webkit-scrollbar-track {
+    background: #424242;
+    border-radius: 100px;
+}
+.five-day::-webkit-scrollbar-thumb {
+    background: #292929;
+    border-radius: 100px;
 }

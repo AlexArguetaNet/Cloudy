@@ -8,7 +8,15 @@ import { LoadingModal } from './components/LoadingModal';
 
 function App() {
 
-  // TODO: COntinue finding day/night images for weather conditions
+  // TODO: Continue finding day/night images for weather conditions
+  /* 
+
+    TODO:
+
+    Implement useGeolocation hook from @uidotdev/usehooks library
+    to get weather data according to the user's location with 
+    their permission
+  */
 
   const [currWeather, setCurrWeather] = useState({});
   const [location, setLocation] = useState({});
@@ -53,10 +61,10 @@ function App() {
         }
 
 
+        // Get current time in target city
         let dt = res.data.current.dt;
         let timezone = res.data.current.timezone;
-
-        // Get current time in target city
+        
         const utcSeconds = parseInt(dt) + parseInt(timezone);
         const utcMilliseconds = utcSeconds * 1000;
         const localDate = new Date(utcMilliseconds);
