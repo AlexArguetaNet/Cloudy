@@ -1,6 +1,6 @@
 import "../styles/Navbar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass, faSun } from "@fortawesome/free-solid-svg-icons";
+import { faMagnifyingGlass, faSun, faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 
 export const Navbar = (props: { getWeather: (city: string, units: string) => void }) => {
@@ -41,9 +41,9 @@ export const Navbar = (props: { getWeather: (city: string, units: string) => voi
                             <option value="imperial">Imperial</option>
                             <option value="metric">Metric</option>
                         </select>
+            
                     </div>
                     <input type="text" 
-                        name="city"
                         value={city} 
                         onKeyDown={(event) => handleKeyboardSubmit(event)} 
                         onChange={(event) => setCity(event.target.value)} 

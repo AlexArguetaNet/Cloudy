@@ -41,24 +41,33 @@ button:hover {
     align-items: center;
 }
 
+
 select {
   background-color: transparent;
   border: none;
+  border-radius: 5px;
   font-family: inherit;
   cursor: inherit;
   line-height: inherit;
   outline: none;
   width: 100%;
+  padding: 0px 9px;
 }
+
 
 select::-ms-expand {
     display: none;
 }
 
+option {
+    background-color: white;
+}
+
 .select-div {
     margin-right: 10px;
     text-align: center;
-    width: 100px
+    display: flex;
+    align-items: center;
 }
 
 
