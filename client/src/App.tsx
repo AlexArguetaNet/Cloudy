@@ -4,6 +4,7 @@ import { CurrentWeather } from './components/CurrentWeather';
 import { FiveDay } from './components/FiveDay';
 import axios, { AxiosResponse } from "axios";
 import { useEffect, useState } from 'react';
+import { LoadingModal } from './components/LoadingModal';
 
 function App() {
 
@@ -94,16 +95,6 @@ function App() {
     
   }, []);
 
-  // Loading icon
-  function showLoadingModal() {
-    return (
-      <div className="loading">
-        <h3>Loading</h3>
-        <div className="lds-dual-ring"></div>
-      </div>
-    );
-  }
-
 
 
 
@@ -111,7 +102,7 @@ function App() {
     // Set the background images according to the current forecast
       <div className="app">
 
-        { loading && showLoadingModal() }
+        { loading && <LoadingModal/>}
         
         <Navbar  getWeather={getWeather}/>
         <div className="weather-container">
