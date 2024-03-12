@@ -1,11 +1,15 @@
 
 .five-day {
+    padding: 85px 20px 30px 20px;
+    margin-bottom: 50px;
+}
+
+.five-day .list {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     text-align: center;
-    padding: 85px 20px 60px 20px;
-    margin-bottom: 30px;
     overflow: auto;
+    padding-bottom: 30px;
 }
 
 .five-day .title {
@@ -30,15 +34,15 @@
 }
 
 
-.five-day::-webkit-scrollbar {
+.five-day .list::-webkit-scrollbar {
     height: 10px;
     margin: 0px 20px;
 }
-.five-day::-webkit-scrollbar-track {
-    background: #424242;
+.five-day .list::-webkit-scrollbar-track {
+    background: #181818;
     border-radius: 100px;
 }
-.five-day::-webkit-scrollbar-thumb {
-    background: #292929;
+.five-day .list::-webkit-scrollbar-thumb {
+    background: #464646;
     border-radius: 100px;
 }

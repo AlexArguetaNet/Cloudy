@@ -7,10 +7,12 @@ export const FiveDay = (props: { data: any }) => {
     return (
         <div className="five-day container">
             <h2 className="title">Five day Forecast</h2>
+            <div className="list">
             {fiveDay.map((elem: any, index: number) => {
 
                 return <ListItem key={index} weather={elem} index={index}/>
             })}
+            </div>
         </div>
     );
 }

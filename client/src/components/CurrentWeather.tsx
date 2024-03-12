@@ -22,6 +22,13 @@ export const CurrentWeather = (props: { weather: any, location: any }) => {
         return "n/a";
     }
 
+    function formatDate(): string {
+
+        const localDate = new Date(weather.dt * 1000);
+        return localDate.toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"});
+
+    }
+
     function getTime(unixTime: number, isNight: boolean): string {
 
         const utcSeconds = unixTime + parseInt(weather.timezone);
@@ -30,17 +37,16 @@ export const CurrentWeather = (props: { weather: any, location: any }) => {
 
         let hour = localDate.getUTCHours();
         let minutes = localDate.getUTCMinutes().toString();
+        let amOrPm = "AM"
 
-        if (isNight) {
-            hour = hour - 12;
-
-            if (hour == 0) hour = 12;
-            if (hour < 0) hour = hour * -1;
+        // Adjust hour to 12hr clock
+        if (hour >= 13) {
+            hour -= 12;
+            amOrPm = "PM";
         }
-
         if (minutes.length == 1) minutes = `0${minutes}`;
 
-        return `${hour}: ${minutes}`;
+        return `${hour}: ${minutes} ${amOrPm}`;
 
     }
 
@@ -48,7 +54,11 @@ export const CurrentWeather = (props: { weather: any, location: any }) => {
 
         <div className="current-weather">
             <div className="content container">
-            <h2 className="title">Current Forecast</h2>
+                <div className="title">
+                    <h2>Current Forecast</h2>
+                    <p>{formatDate()}</p>
+                </div>
+
                 <div className="curr-data main">
                     
                     <p className="location-text">{location.name}</p>
@@ -90,12 +100,12 @@ export const CurrentWeather = (props: { weather: any, location: any }) => {
                 <div className="sun container">
                     <div>
                         <img src={sunriseIcon} alt="" />
-                        <p>{getTime(parseInt(weather.sys.sunrise), false)} AM</p>
+                        <p>{getTime(parseInt(weather.sys.sunrise), false)}</p>
                         <p>Sunrise</p>
                     </div>
                     <div>
                         <img src={sunsetIcon} alt="" />
-                        <p>{getTime(parseInt(weather.sys.sunset), true)} PM</p>
+                        <p>{getTime(parseInt(weather.sys.sunset), true)}</p>
                         <p>Sunset</p>
                     </div>
                 </div>

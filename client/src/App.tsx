@@ -9,6 +9,7 @@ import { LoadingModal } from './components/LoadingModal';
 function App() {
 
   // TODO: Continue finding day/night images for weather conditions
+  // TODO: Implement units of measurement
   /* 
 
     TODO:
@@ -22,6 +23,7 @@ function App() {
   const [location, setLocation] = useState({});
   const [fiveDay, setFiveDay] = useState({});
   const [loading, setLoading] = useState(false);
+  const [units, setUnits] = useState("imperial");
 
   // Apply background image to the body
   // Icon from response may help
@@ -33,6 +35,9 @@ function App() {
   function getWeather(city: string) {
 
     setLoading(true);
+
+    // Set timeout
+    axios.defaults.timeout = 15000;
 
     axios.post("http://localhost:4001/", { city: city.split(' ').join('+') })
     .then((res: AxiosResponse) => {
@@ -54,7 +59,7 @@ function App() {
           cond = "rain";
         } else if (icon == "Snow") {
           cond = "snow";
-        } else if (icon == "Mist") {
+        } else if (icon == "Mist" || icon == "Fog") {
           cond = "mist";
         } else {
           cond = "none";
@@ -90,7 +95,10 @@ function App() {
 
       setLoading(false);
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      alert(err.message);
+      setLoading(false);
+    });
   }
 
 

@@ -5,9 +5,16 @@
 
 .current-weather .content .title {
     position: absolute;
-    border-bottom: 2px solid white;
+    display: flex;
+    align-items: center;
+    width: 90%;
+    justify-content: space-between;
     top: 15px;
     left: 20px;
+}
+
+.current-weather .content .title h2 {
+    border-bottom: 1px solid white;
 }
 
 .current-weather .content {

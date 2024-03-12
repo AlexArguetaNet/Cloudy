@@ -6,6 +6,18 @@
     padding: 0px;
 }
 
+body {
+    height: 100%;
+}
+
+body{
+    background-color: grey;
+    background-repeat: no-repeat;
+    background-size: cover;
+    scrollbar-gutter: stable;
+    background-attachment: fixed;
+  }
+
 input {
     border: none;
     border-radius: 5px;
