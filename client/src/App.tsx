@@ -17,6 +17,8 @@ function App() {
   
 
   // Apply background image to the body
+  // Icon from response may help
+  // in getting the time for each search city
   const [imgUrl, setImgUrl] = useState("");
   window.document.body.style.backgroundImage = `url(${imgUrl})`;
 
@@ -50,13 +52,12 @@ function App() {
         }
 
         // Get the date/time of the search location
+        // Unix time int must be multiplied by 1000
         const currDate = new Date(res.data.current.dt * 1000);
-        console.log(currDate);
 
-        console.log(currDate.getHours());
       
         // Check if it is day or night
-        if (currDate.getHours() >= 7 && currDate.getHours() <= 19) {
+        if (currDate.getHours() >= 7 && currDate.getHours() <= 18) {
           picTime = "day";
         } else {
           picTime = "night";
@@ -90,6 +91,7 @@ function App() {
     
   }, []);
 
+  // Loading icon
   function showLoadingModal() {
     return (
       <div className="loading">
