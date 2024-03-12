@@ -91,6 +91,7 @@
 }
 .sun, .visibility {
     display: flex;
+    justify-content: center;
 }
 
 .sun, .pressure, .visibility, .feels-like {

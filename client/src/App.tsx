@@ -23,7 +23,8 @@ function App() {
   const [location, setLocation] = useState({});
   const [fiveDay, setFiveDay] = useState({});
   const [loading, setLoading] = useState(false);
-  const [units, setUnits] = useState("imperial");
+  const [unitSymbol, setUnitSymbol] = useState("");
+
 
   // Apply background image to the body
   // Icon from response may help
@@ -32,14 +33,14 @@ function App() {
   window.document.body.style.backgroundImage = `url(${imgUrl})`;
 
 
-  function getWeather(city: string) {
+  function getWeather(city: string, units: string) {
 
     setLoading(true);
 
     // Set timeout
     axios.defaults.timeout = 15000;
 
-    axios.post("http://localhost:4001/", { city: city.split(' ').join('+') })
+    axios.post("http://localhost:4001/", { city: city.split(' ').join('+'), units })
     .then((res: AxiosResponse) => {
 
       if (res.data.error) {
@@ -89,7 +90,11 @@ function App() {
         setCurrWeather(res.data.current);
         setLocation(res.data.location);
         setFiveDay(res.data.fiveDay);
+
+        setUnitSymbol(res.data.current.unitSymbols.temp);
+
         window.localStorage.setItem("city", city);
+        window.localStorage.setItem("units", units);
 
       }
 
@@ -106,8 +111,12 @@ function App() {
   // Get weather data on initial render
   useEffect(() => {
     
+    // Check for units
+    let units = window.localStorage.getItem("units");
+    if (!units) units = "imperial";
+
     let localCity = window.localStorage.getItem("city");
-    localCity ? getWeather(localCity || "") : getWeather("Charlotte");
+    localCity ? getWeather(localCity || "", units || "") : getWeather("Charlotte", units || "");
     
   }, []);
 
@@ -127,7 +136,7 @@ function App() {
           { Object.keys(currWeather).length !== 0 && (
             <>
               <CurrentWeather weather={currWeather} location={location} />
-              <FiveDay data={fiveDay} />
+              <FiveDay fiveDayList={fiveDay} unitSymbol={unitSymbol}/>
             </>
           ) }
 

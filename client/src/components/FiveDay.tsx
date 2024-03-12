@@ -1,15 +1,15 @@
 import "../styles/FiveDay.css";
 
-export const FiveDay = (props: { data: any }) => {
+export const FiveDay = (props: { fiveDayList: any, unitSymbol: any }) => {
 
-    const fiveDay: object[] = props.data;
+    const { fiveDayList, unitSymbol } = props;
 
     return (
         <div className="five-day container">
             <h2 className="title">Five day Forecast</h2>
             <div className="list">
-            {fiveDay.map((elem: any, index: number) => {
-
+            {fiveDayList.map((elem: any, index: number) => {
+                elem.unitSymbol = unitSymbol;
                 return <ListItem key={index} weather={elem} index={index}/>
             })}
             </div>
@@ -33,7 +33,7 @@ const ListItem = (props: { weather: any, index: number }) => {
         <div className="list-item">
             <p>{ index == 0 ? <>Today</> : getDayName(day.dt)}</p>
             <img src={`https://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`} alt="" />
-            <p>{Math.floor(day.temp.day)}&deg;</p>
+            <p>{Math.floor(day.temp.day)}&deg; {day.unitSymbol}</p>
             <p>{day.weather[0].main}</p>
         </div>
     );

@@ -5,7 +5,7 @@ import axios from "axios";
 export const getWeather = async (req: Request, res: Response): Promise<Response<any, Record<string, any>>> => {
 
     const apiKey = process.env.API_KEY;
-    const { city } = req.body;
+    const { city, units } = req.body;
 
     if (city === "") return res.json({ error: "Empty input", msg: "Please enter a city name" });
 
@@ -22,15 +22,33 @@ export const getWeather = async (req: Request, res: Response): Promise<Response<
         }
 
         // Get current forecast
-        const current = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${geoLocation.data[0].lat}&lon=${geoLocation.data[0].lon}&units=imperial&appid=${apiKey}`);
+        const current = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${geoLocation.data[0].lat}&lon=${geoLocation.data[0].lon}&units=${units}&appid=${apiKey}`);
 
         // Response contains daily forecast
-        const weatherData = await axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${geoLocation.data[0].lat}&lon=${geoLocation.data[0].lon}&units=imperial&cnt=5&appid=${apiKey}`);
+        const weatherData = await axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${geoLocation.data[0].lat}&lon=${geoLocation.data[0].lon}&units=${units}&cnt=5&appid=${apiKey}`);
         // Extract then splice daily forecast array to get forecast for next 5 days instead of 8
         const fiveDay: object[] = weatherData.data.daily;
         fiveDay.pop();
         fiveDay.pop();
         fiveDay.pop();
+
+        // Set correct units
+        let unitSymbols = {};
+
+        let imperialSymbols = {
+            temp: "F",
+            speed: "mph",
+            distance: "mi"
+        }
+
+        let metricSymbols = {
+            temp: "C",
+            speed: "kph",
+            distance: "km"
+        }
+        units === "imperial" ? unitSymbols = imperialSymbols : unitSymbols = metricSymbols;
+
+        current.data.unitSymbols = unitSymbols;
 
 
         return res.json({ location, current: current.data, fiveDay });

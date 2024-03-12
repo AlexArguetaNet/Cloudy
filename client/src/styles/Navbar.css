@@ -35,3 +35,35 @@ button {
 button:hover {
     background-color: rgba(74, 224, 134, 0.7);
 }
+
+.controls {
+    display: flex;
+    align-items: center;
+}
+
+select {
+  background-color: transparent;
+  border: none;
+  font-family: inherit;
+  cursor: inherit;
+  line-height: inherit;
+  outline: none;
+  width: 100%;
+}
+
+select::-ms-expand {
+    display: none;
+}
+
+.select-div {
+    margin-right: 10px;
+    text-align: center;
+    width: 100px
+}
+
+
+option {
+    border: none;
+    text-align: center;
+    color: black;
+}
