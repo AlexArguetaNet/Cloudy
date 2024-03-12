@@ -24,8 +24,16 @@ export const CurrentWeather = (props: { weather: any, location: any }) => {
 
     function getTime(unixTime: number): string {
 
+
         // TODO: Convert unix time into local time 
         const mDate = new Date(unixTime * 1000);
+        let localTime = mDate.getTime();
+
+        let localOffSet = mDate.getTimezoneOffset() * 60000;
+        let utc = localTime + localOffSet;
+
+        let currTime = utc + (1000 + weather.timezone);
+        let currDate = new Date(currTime);
 
         return `${mDate.getHours()} : ${mDate.getMinutes()}`
 

@@ -47,6 +47,8 @@ function App() {
           cond = "rain";
         } else if (icon == "Snow") {
           cond = "snow";
+        } else if (icon == "Mist") {
+          cond = "mist";
         } else {
           cond = "none";
         }
@@ -65,7 +67,9 @@ function App() {
 
 
         // Set background image URL
-        setImgUrl(`/src/assets/backgrounds/${cond}_${picTime}.jpg`);        
+        setImgUrl(`/src/assets/backgrounds/${cond}_${picTime}.jpg`); 
+        console.log(icon);   
+        console.log(imgUrl);    
 
 
         // Get current and fiveDay weather data from response

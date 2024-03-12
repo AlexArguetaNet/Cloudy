@@ -10,15 +10,25 @@ export const FiveDay = (props: { data: any }) => {
             <h2 className="title">Five day Forecast</h2>
             {fiveDay.map((elem: any, index: number) => {
 
-                return <ListItem key={index} weather={elem} />
+                return <ListItem key={index} weather={elem} index={index}/>
             })}
         </div>
     );
 }
 
-const ListItem = (props: { weather: any }) => {
+const ListItem = (props: { weather: any, index: number }) => {
 
     const day = props.weather;
+    const { index } = props;
+
+    function getTimeStr(): string {
+        const currDate = new Date();
+        if (currDate.getHours() >= 7 && currDate.getHours() <= 18) {
+            return "Today";
+        } else {
+            return "Tonight";
+        }
+    }
     
     function getDayName(unixTime: number): string {
 
@@ -29,7 +39,7 @@ const ListItem = (props: { weather: any }) => {
 
     return (
         <div className="list-item">
-            <p>{getDayName(day.dt)}</p>
+            <p>{ index == 0 ? getTimeStr() : getDayName(day.dt)}</p>
             <img src={`https://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`} alt="" />
             <p>{Math.floor(day.temp.day)}&deg;</p>
             <p>{day.weather[0].main}</p>
