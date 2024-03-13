@@ -38,7 +38,7 @@ export const Navbar = (props: { getWeather: (city: string, units: string) => voi
     return (
         <div className="navbar">
             <div className="links">
-                <h2>Cloudy <FontAwesomeIcon icon={faSun}/></h2>
+                <h2 id="title">Cloudy <FontAwesomeIcon icon={faSun}/></h2>
                 <div className="controls">
                     <div className="select-div">
                         <p>Units:</p>

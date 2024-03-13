@@ -56,7 +56,7 @@ export const CurrentWeather = (props: { weather: any, location: any }) => {
             <div className="content container">
                 <div className="title">
                     <h2>Current Forecast</h2>
-                    <p>{formatDate()}</p>
+                    <p id="date">{formatDate()}</p>
                 </div>
 
                 <div className="curr-data main">

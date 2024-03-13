@@ -21,17 +21,13 @@
     padding: 20px 20px;
     display: flex;
     justify-content: center;
-    align-items: center;
+    
     flex-wrap: wrap;
 }
 .current-weather .content .curr-data {
-    width: 50%;
-    /* background-color: rgba(130, 130, 130, 0.5); */
-}
-
-.curr-data {
+    width: 300px;
+    margin-top: 60px;
     text-align: center;
-    margin-top: 40px;
 }
 
 .main p {
@@ -108,4 +104,10 @@
     text-align: center;
     margin: 0px 0px 10px 5px;
     flex: 1;
+}
+
+@media (max-width: 700px) {
+    #date, #title {
+        display: none;
+    }
 }
