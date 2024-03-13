@@ -59,6 +59,7 @@ export const Navbar = (props: {
             
                     </div>
                     <input type="text" 
+                        name="city"
                         value={city} 
                         onKeyDown={(event) => handleKeyboardSubmit(event)} 
                         onChange={(event) => setCity(event.target.value)} 

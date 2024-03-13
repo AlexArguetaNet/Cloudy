@@ -51,7 +51,9 @@ function App() {
           cond = "rain";
         } else if (weatherCondition == "Snow") {
           cond = "snow";
-        } else if (weatherCondition == "Mist" || weatherCondition == "Fog") {
+        } else if (weatherCondition == "Mist" || 
+                    weatherCondition == "Fog" || 
+                    weatherCondition == "Smoke") {
           cond = "mist";
         } else {
           cond = "none";
