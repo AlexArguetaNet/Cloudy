@@ -3,18 +3,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass, faSun, faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import { Tooltip } from "@mui/material";
-import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
+import { useGeolocation } from "@uidotdev/usehooks";
 
 export const Navbar = (props: { 
         getWeather: (city: string, units: string) => void, 
-        currLocation: boolean,
         getCurrLocationForecast: () => void
     }) => {
 
     const [city, setCity] = useState("");
     const [units, setUnits] = useState("");
-    const { currLocation, getCurrLocationForecast } = props;
+    const { getCurrLocationForecast } = props;
 
     // User clicks the search button
     function handleClickSubmit(): void {
@@ -67,15 +66,31 @@ export const Navbar = (props: {
                         required
                     />
                     <button onClick={() => handleClickSubmit()}><FontAwesomeIcon icon={faMagnifyingGlass}/></button>
-                    { currLocation && (
-                        <>
-                        <Tooltip title="Your location" placement="bottom">
-                            <IconButton id="location-icon" size="small" onClick={getCurrLocationForecast}><FontAwesomeIcon icon={faLocationDot}/></IconButton>
-                        </Tooltip>
-                        </>
-                    )}
+                    <Location getCurrentLocationForecast={getCurrLocationForecast}/>
                 </div>
             </div>
         </div>
     );
+}
+
+
+const Location = (props: {getCurrentLocationForecast: () => void}) => {
+    const state = useGeolocation();
+    const { getCurrentLocationForecast } = props;
+    
+    if (state.loading) {
+        return <></>
+    }
+
+    if (state.error) {
+        return <></>
+    }
+
+    return (
+        <Tooltip title="Your location" placement="bottom">
+            <IconButton id="location-icon" size="small" onClick={getCurrentLocationForecast}><FontAwesomeIcon icon={faLocationDot}/></IconButton>
+        </Tooltip>
+    )
+
+
 }

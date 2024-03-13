@@ -137,7 +137,7 @@ function App() {
         {/* Loading modal */}
         { loading && <LoadingModal/>}
         
-        <Navbar  getWeather={getWeather} currLocation={currLocation} getCurrLocationForecast={getCurrLocationForecast}/>
+        <Navbar  getWeather={getWeather} getCurrLocationForecast={getCurrLocationForecast}/>
         <div className="weather-container">
           {/* Only render UI when weather data has been received */}
           { Object.keys(currWeather).length !== 0 && (
