@@ -2,6 +2,9 @@ import "../styles/Navbar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass, faSun, faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
+import { Tooltip } from "@mui/material";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
 
 export const Navbar = (props: { 
         getWeather: (city: string, units: string) => void, 
@@ -64,7 +67,13 @@ export const Navbar = (props: {
                         required
                     />
                     <button onClick={() => handleClickSubmit()}><FontAwesomeIcon icon={faMagnifyingGlass}/></button>
-                    { currLocation && <button id="location-icon" onClick={getCurrLocationForecast}><FontAwesomeIcon icon={faLocationDot}/></button>}
+                    { currLocation && (
+                        <>
+                        <Tooltip title="Your location" placement="bottom">
+                            <IconButton id="location-icon" size="small" onClick={getCurrLocationForecast}><FontAwesomeIcon icon={faLocationDot}/></IconButton>
+                        </Tooltip>
+                        </>
+                    )}
                 </div>
             </div>
         </div>

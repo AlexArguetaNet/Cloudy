@@ -17,6 +17,8 @@ export const getWeather = async (req: Request, res: Response): Promise<Response<
         let lon;
         let geoLocation;
 
+        console.log(cords);
+
         // Get location based on given coordinates or the name of a city
         if (cords) {
             lat = cords.lat;
@@ -69,7 +71,7 @@ export const getWeather = async (req: Request, res: Response): Promise<Response<
 
     } catch(err) {
         if (err instanceof Error) {
-            console.log(err);
+            console.log(`Error: Could not fetch data`);
         }
         return res.json({ error: err, msg: "No results"});
     }
