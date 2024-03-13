@@ -36,6 +36,10 @@ button:hover {
     background-color: rgba(74, 224, 134, 0.7);
 }
 
+#location-icon:hover {
+    background-color: rgb(70, 110, 243);
+}
+
 .controls {
     display: flex;
     align-items: center;

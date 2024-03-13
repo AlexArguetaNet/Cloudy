@@ -7,6 +7,7 @@ export const getWeather = async (req: Request, res: Response): Promise<Response<
     const apiKey = process.env.API_KEY;
     const { city, units, cords } = req.body;
 
+    // Handle empty input
     if (city === "" && cords == undefined) return res.json({ error: "Empty input", msg: "Please enter a city name" });
 
     try {
@@ -16,12 +17,12 @@ export const getWeather = async (req: Request, res: Response): Promise<Response<
         let lon;
         let geoLocation;
 
+        // Get location based on given coordinates or the name of a city
         if (cords) {
             lat = cords.lat;
             lon = cords.lon;
             geoLocation = await axios.get(`http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=${apiKey}`)
         } else {
-            // Get geolocation
             geoLocation = await axios.get(`http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${apiKey}`);
             lat = geoLocation.data[0].lat;
             lon = geoLocation.data[0].lon;
@@ -34,35 +35,33 @@ export const getWeather = async (req: Request, res: Response): Promise<Response<
             state: geoLocation.data[0].state || "" // Incase no state attribute is returned from API call
         }
 
-        console.log(location);
-
         // Get current forecast
         const current = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${geoLocation.data[0].lat}&lon=${geoLocation.data[0].lon}&units=${units}&appid=${apiKey}`);
 
-        // Response contains daily forecast
+        /* 
+            Extract 8 day forecast from this response.
+            Then pop the last 3 elements from the array
+            to get the forecast for the nex t5 days
+        */
         const weatherData = await axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${geoLocation.data[0].lat}&lon=${geoLocation.data[0].lon}&units=${units}&cnt=5&appid=${apiKey}`);
-        // Extract then splice daily forecast array to get forecast for next 5 days instead of 8
         const fiveDay: object[] = weatherData.data.daily;
         fiveDay.pop();
         fiveDay.pop();
         fiveDay.pop();
 
-        // Set correct units
+        // Set units of measurement according to user's input
         let unitSymbols = {};
-
-        let imperialSymbols = {
+        const imperialSymbols = {
             temp: "F",
             speed: "mph",
             distance: "mi"
         }
-
-        let metricSymbols = {
+        const metricSymbols = {
             temp: "C",
             speed: "kph",
             distance: "km"
         }
         units === "imperial" ? unitSymbols = imperialSymbols : unitSymbols = metricSymbols;
-
         current.data.unitSymbols = unitSymbols;
 
 

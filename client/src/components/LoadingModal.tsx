@@ -3,6 +3,7 @@ import { useLockBodyScroll } from '@uidotdev/usehooks';
 
 export const LoadingModal = () => {
 
+  // Hook used to disable scrolling while data is being fetched
     useLockBodyScroll();
 
     return (

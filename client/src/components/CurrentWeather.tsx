@@ -14,6 +14,7 @@ export const CurrentWeather = (props: { weather: any, location: any }) => {
 
     const { weather, location } = props;
 
+    // Get cardinal direction based on wind degree
     function getWindDirection(deg: number): string {
         if (deg >= 0 && deg <= 89) return "N";
         if (deg >= 90 && deg <= 179) return "E";
@@ -22,6 +23,7 @@ export const CurrentWeather = (props: { weather: any, location: any }) => {
         return "n/a";
     }
 
+    // Format current date of target location
     function formatDate(): string {
 
         const localDate = new Date(weather.dt * 1000);
@@ -29,11 +31,14 @@ export const CurrentWeather = (props: { weather: any, location: any }) => {
 
     }
 
+    // Convert unix time to standard time (12hr clock)
     function getTime(unixTime: number): string {
 
-        const utcSeconds = unixTime + parseInt(weather.timezone);
-        const utcMilliseconds = utcSeconds * 1000;
-        const localDate = new Date(utcMilliseconds);
+        /* 
+            Formula to convert unix time to military
+            time based on target location's timezone
+        */
+        const localDate = new Date((unixTime + parseInt(weather.timezone)) * 1000);
 
         let hour = localDate.getUTCHours();
         let minutes = localDate.getUTCMinutes().toString();
@@ -49,6 +54,8 @@ export const CurrentWeather = (props: { weather: any, location: any }) => {
         return `${hour}: ${minutes} ${amOrPm}`;
 
     }
+
+    
 
     return (
 
@@ -122,13 +129,13 @@ export const CurrentWeather = (props: { weather: any, location: any }) => {
                 <div className="sun container">
                     <div>
                         <img src={sunriseIcon} alt="" />
-                        <p>{getTime(parseInt(weather.sys.sunrise))}</p>
                         <p>Sunrise</p>
+                        <p>{getTime(parseInt(weather.sys.sunrise))}</p>
                     </div>
                     <div>
                         <img src={sunsetIcon} alt="" />
-                        <p>{getTime(parseInt(weather.sys.sunset))}</p>
                         <p>Sunset</p>
+                        <p>{getTime(parseInt(weather.sys.sunset))}</p>
                     </div>
                 </div>
 

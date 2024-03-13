@@ -1,18 +1,25 @@
 import "../styles/Navbar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass, faSun, faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import { faMagnifyingGlass, faSun, faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 
-export const Navbar = (props: { getWeather: (city: string, units: string) => void }) => {
+export const Navbar = (props: { 
+        getWeather: (city: string, units: string) => void, 
+        currLocation: boolean,
+        getCurrLocationForecast: () => void
+    }) => {
 
     const [city, setCity] = useState("");
     const [units, setUnits] = useState("");
+    const { currLocation, getCurrLocationForecast } = props;
 
+    // User clicks the search button
     function handleClickSubmit(): void {
         props.getWeather(city, units)
         setCity("")
     }
 
+    // User presses enter key
     function handleKeyboardSubmit(event: React.KeyboardEvent<HTMLInputElement>): void {
         if (event.key === "Enter" && city.length != 0) {
             props.getWeather(city, units);
@@ -20,6 +27,7 @@ export const Navbar = (props: { getWeather: (city: string, units: string) => voi
         }
     }
 
+    // User selects a different unit from select menu
     function handleUnitChange(unitStr: string): void {
         
         // Reset unit values
@@ -27,7 +35,7 @@ export const Navbar = (props: { getWeather: (city: string, units: string) => voi
         window.localStorage.setItem("units", unitStr);
 
         // Get weather with new units
-        props.getWeather(window.localStorage.getItem("city") || "charlotte", window.localStorage.getItem("units") || "imperial");
+        props.getWeather(window.localStorage.getItem("city") || "cupertino", window.localStorage.getItem("units") || "imperial");
     }
 
     // Set the last units that were used
@@ -56,6 +64,7 @@ export const Navbar = (props: { getWeather: (city: string, units: string) => voi
                         required
                     />
                     <button onClick={() => handleClickSubmit()}><FontAwesomeIcon icon={faMagnifyingGlass}/></button>
+                    { currLocation && <button id="location-icon" onClick={getCurrLocationForecast}><FontAwesomeIcon icon={faLocationDot}/></button>}
                 </div>
             </div>
         </div>

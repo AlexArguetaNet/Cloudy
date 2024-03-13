@@ -22,8 +22,8 @@ const ListItem = (props: { weather: any, index: number }) => {
     const day = props.weather;
     const { index } = props;
     
+    // Get week day name abbreviation based on the target location's unix time
     function getDayName(unixTime: number): string {
-
         let mDate = new Date(unixTime * 1000);
         return `${mDate.toLocaleDateString('en-us', { weekday: "short" })} ${mDate.getDate()}`;
 

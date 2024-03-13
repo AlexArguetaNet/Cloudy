@@ -10,29 +10,29 @@ import { useGeolocation } from '@uidotdev/usehooks';
 function App() {
 
   // TODO: Continue finding day/night images for weather conditions
-  // TODO: Use button to access current location instead?
 
   const [currWeather, setCurrWeather] = useState({});
   const [location, setLocation] = useState({});
   const [fiveDay, setFiveDay] = useState({});
   const [loading, setLoading] = useState(false);
   const [unitSymbol, setUnitSymbol] = useState("");
-  const [cordFetched, setCordFetched] = useState(false);
+  const [currLocation, setCurrLocation] = useState(false);
+  const [cords, setCords] = useState({});
 
   // Apply background image to the body
-  // Icon from response may help
-  // in getting the time for each search city
   const [imgUrl, setImgUrl] = useState("");
   window.document.body.style.backgroundImage = `url(${imgUrl})`;
 
 
-  function getWeather(city: string, units: string, cords?: object) {
+  // Fetch weather data
+  function getWeather(city: string, units: string, cords?: object): void {
 
     setLoading(true);
 
     // Set timeout
     axios.defaults.timeout = 15000;
 
+    // API call to the server
     axios.post("http://localhost:4001/", { city: city.split(' ').join('+'), units, cords })
     .then((res: AxiosResponse) => {
 
@@ -40,35 +40,32 @@ function App() {
         alert(res.data.msg);
       } else {
 
+        // Check current weather condition to determine background image
+        let weatherCondition = res.data.current.weather[0].main
         let cond: string;
-        let picTime: string;
-
-        // Check current weather condition
-        let icon = res.data.current.weather[0].main
-        if (icon == "Clear") {
+        if (weatherCondition == "Clear") {
           cond = "clear";
-        } else if (icon == "Clouds") {
+        } else if (weatherCondition == "Clouds") {
           cond = "clouds";
-        }  else if (icon == "Rain") {
+        }  else if (weatherCondition == "Rain") {
           cond = "rain";
-        } else if (icon == "Snow") {
+        } else if (weatherCondition == "Snow") {
           cond = "snow";
-        } else if (icon == "Mist" || icon == "Fog") {
+        } else if (weatherCondition == "Mist" || weatherCondition == "Fog") {
           cond = "mist";
         } else {
           cond = "none";
         }
 
-
-        // Get current time in target city
+        // Get current time in target location
         let dt = res.data.current.dt;
         let timezone = res.data.current.timezone;
-        
         const utcSeconds = parseInt(dt) + parseInt(timezone);
         const utcMilliseconds = utcSeconds * 1000;
         const localDate = new Date(utcMilliseconds);
       
-        // Check if it is day or night
+        // Check if it is day or night in target location
+        let picTime: string;
         if (localDate.getUTCHours() >= 7 && localDate.getUTCHours() <= 18) {
           picTime = "day";
         } else {
@@ -78,14 +75,13 @@ function App() {
         // Set background image URL
         setImgUrl(`/src/assets/backgrounds/${cond}_${picTime}.jpg`); 
 
-
         // Get current and fiveDay weather data from response
         setCurrWeather(res.data.current);
         setLocation(res.data.location);
         setFiveDay(res.data.fiveDay);
-
         setUnitSymbol(res.data.current.unitSymbols.temp);
 
+        // Store city name and units in browser's local storage
         window.localStorage.setItem("city", res.data.location.name);
         window.localStorage.setItem("units", units);
 
@@ -102,28 +98,32 @@ function App() {
 
   // Ask for permission to use current location
   const permission = useGeolocation();
-  console.log(permission);  
-  if (permission.loading == false && !window.localStorage.getItem("fetchedCords")) {
+  if (permission.loading == false && currLocation == false) {
 
     // Check if the user allowed permission to user their location
     if (permission.error == null) {
-      window.localStorage.setItem("fetchedCords", "true");
-      setCordFetched(true); // Boolean to stop re-renders after current cords. are set
-      getWeather("", "imperial", { lat: permission.latitude, lon: permission.longitude });
+      setCurrLocation(true);
+      setCords({ lat: permission.latitude, lon: permission.longitude });
     }
 
   }
+
+  // Fetch forecast based on the user's current location
+  function getCurrLocationForecast(): void {
+    getWeather("", window.localStorage.getItem("units") || "imperial", cords);
+  }
   
 
-  // Get weather data on initial render
+  // Fetch weather data on initial render
   useEffect(() => {
     
-      // Check for units
+      // Check for units in local storage
       let units = window.localStorage.getItem("units");
       if (!units) units = "imperial";
 
+      // Check for city in local storage
       let localCity = window.localStorage.getItem("city");
-      localCity ? getWeather(localCity || "", units || "") : getWeather("Charlotte", units || "");
+      localCity ? getWeather(localCity || "", units || "") : getWeather("cupertino", units || "");
     
   }, []);
 
@@ -132,14 +132,13 @@ function App() {
 
 
   return (
-    // Set the background images according to the current forecast
       <div className="app">
 
+        {/* Loading modal */}
         { loading && <LoadingModal/>}
         
-        <Navbar  getWeather={getWeather}/>
+        <Navbar  getWeather={getWeather} currLocation={currLocation} getCurrLocationForecast={getCurrLocationForecast}/>
         <div className="weather-container">
-
           {/* Only render UI when weather data has been received */}
           { Object.keys(currWeather).length !== 0 && (
             <>
