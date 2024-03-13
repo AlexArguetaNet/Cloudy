@@ -89,9 +89,18 @@
 .sun div:nth-child(2), .visibility div:nth-child(2) {
     margin-left: 30px
 }
-.sun, .visibility {
+
+
+.second-row .container {
     display: flex;
     justify-content: center;
+    align-items: center;
+}
+.feels-like, .pressure {
+    flex-direction: column;
+}
+.feels-like img {
+    margin: 5px 0px 10px 0px;
 }
 
 .sun, .pressure, .visibility, .feels-like {
