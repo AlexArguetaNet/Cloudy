@@ -5,14 +5,27 @@ import axios from "axios";
 export const getWeather = async (req: Request, res: Response): Promise<Response<any, Record<string, any>>> => {
 
     const apiKey = process.env.API_KEY;
-    const { city, units } = req.body;
+    const { city, units, cords } = req.body;
 
-    if (city === "") return res.json({ error: "Empty input", msg: "Please enter a city name" });
+    if (city === "" && cords == undefined) return res.json({ error: "Empty input", msg: "Please enter a city name" });
 
     try {
 
-        // Get geolocation
-        const geoLocation = await axios.get(`http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${apiKey}`);
+        // Set lat and lon variables
+        let lat;
+        let lon;
+        let geoLocation;
+
+        if (cords) {
+            lat = cords.lat;
+            lon = cords.lon;
+            geoLocation = await axios.get(`http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=${apiKey}`)
+        } else {
+            // Get geolocation
+            geoLocation = await axios.get(`http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${apiKey}`);
+            lat = geoLocation.data[0].lat;
+            lon = geoLocation.data[0].lon;
+        }
 
         // Create location object
         const location = { 
@@ -20,6 +33,8 @@ export const getWeather = async (req: Request, res: Response): Promise<Response<
             country: geoLocation.data[0].country, 
             state: geoLocation.data[0].state || "" // Incase no state attribute is returned from API call
         }
+
+        console.log(location);
 
         // Get current forecast
         const current = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${geoLocation.data[0].lat}&lon=${geoLocation.data[0].lon}&units=${units}&appid=${apiKey}`);
@@ -55,7 +70,7 @@ export const getWeather = async (req: Request, res: Response): Promise<Response<
 
     } catch(err) {
         if (err instanceof Error) {
-            console.log(err.message);
+            console.log(err);
         }
         return res.json({ error: err, msg: "No results"});
     }

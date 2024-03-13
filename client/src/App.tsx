@@ -5,26 +5,19 @@ import { FiveDay } from './components/FiveDay';
 import axios, { AxiosResponse } from "axios";
 import { useEffect, useState } from 'react';
 import { LoadingModal } from './components/LoadingModal';
+import { useGeolocation } from '@uidotdev/usehooks';
 
 function App() {
 
   // TODO: Continue finding day/night images for weather conditions
-  // TODO: Implement units of measurement
-  /* 
-
-    TODO:
-
-    Implement useGeolocation hook from @uidotdev/usehooks library
-    to get weather data according to the user's location with 
-    their permission
-  */
+  // TODO: Use button to access current location instead?
 
   const [currWeather, setCurrWeather] = useState({});
   const [location, setLocation] = useState({});
   const [fiveDay, setFiveDay] = useState({});
   const [loading, setLoading] = useState(false);
   const [unitSymbol, setUnitSymbol] = useState("");
-
+  const [cordFetched, setCordFetched] = useState(false);
 
   // Apply background image to the body
   // Icon from response may help
@@ -33,14 +26,14 @@ function App() {
   window.document.body.style.backgroundImage = `url(${imgUrl})`;
 
 
-  function getWeather(city: string, units: string) {
+  function getWeather(city: string, units: string, cords?: object) {
 
     setLoading(true);
 
     // Set timeout
     axios.defaults.timeout = 15000;
 
-    axios.post("http://localhost:4001/", { city: city.split(' ').join('+'), units })
+    axios.post("http://localhost:4001/", { city: city.split(' ').join('+'), units, cords })
     .then((res: AxiosResponse) => {
 
       if (res.data.error) {
@@ -93,7 +86,7 @@ function App() {
 
         setUnitSymbol(res.data.current.unitSymbols.temp);
 
-        window.localStorage.setItem("city", city);
+        window.localStorage.setItem("city", res.data.location.name);
         window.localStorage.setItem("units", units);
 
       }
@@ -107,18 +100,33 @@ function App() {
   }
 
 
+  // Ask for permission to use current location
+  const permission = useGeolocation();
+  console.log(permission);  
+  if (permission.loading == false && !window.localStorage.getItem("fetchedCords")) {
+
+    // Check if the user allowed permission to user their location
+    if (permission.error == null) {
+      window.localStorage.setItem("fetchedCords", "true");
+      setCordFetched(true); // Boolean to stop re-renders after current cords. are set
+      getWeather("", "imperial", { lat: permission.latitude, lon: permission.longitude });
+    }
+
+  }
+  
 
   // Get weather data on initial render
   useEffect(() => {
     
-    // Check for units
-    let units = window.localStorage.getItem("units");
-    if (!units) units = "imperial";
+      // Check for units
+      let units = window.localStorage.getItem("units");
+      if (!units) units = "imperial";
 
-    let localCity = window.localStorage.getItem("city");
-    localCity ? getWeather(localCity || "", units || "") : getWeather("Charlotte", units || "");
+      let localCity = window.localStorage.getItem("city");
+      localCity ? getWeather(localCity || "", units || "") : getWeather("Charlotte", units || "");
     
   }, []);
+
 
 
 
