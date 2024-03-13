@@ -3,8 +3,17 @@ A single page website that brings the user current and and five-day weather fore
 their current location or a city that they choose to look up. This application uses
 the openweathermap API the retrieve weather data from a specified location.
 
+API used: https://openweathermap.org/
+
 ## Project structure
-The project is devided into two folders: sever and client. The sever folder 
+The project is devided into two folders: sever and client. The sever folder and client folder.
+
+The server folder handles server side code that communicates with the openweathermap API. The folder
+follows the MCV architecture, but does not render views. This folder uses Express,js to create a server
+that handles API requests to get weather data.
+
+The client folder handles the application UI. This code communicates with the server started in the server folder
+to display weather information. This folder is a standard React.js that was created using Vite (https://vitejs.dev/).
 
 ## Future improvements
 Currently, the user can only search the weather forecast by entering the name of a city/town
@@ -19,8 +28,8 @@ can specify the location they would like to see the weather for.
 
 
 ## Technologies used
-  *  Express.js
-  *  React.js
+  *  Express.js (https://expressjs.com/)
+  *  React.js   (https://react.dev/)
 
 ## How to run on your computer
 
