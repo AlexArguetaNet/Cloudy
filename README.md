@@ -2,8 +2,8 @@
 A single page website that brings the user current and future weather information.
 
 # Technologies used
-  . Express.js
-  . React.js
+  *  Express.js
+  *  React.js
 
 # How to run
 
@@ -37,6 +37,19 @@ on your local machine:
     PORT=4001
     API_KEY={ Your API key here }
    ```
+
+  **This step is crucial. The application will throw an error if there is no .env present with the following variables** 
+   
+9) Start the backend server by entering ``` npm run dev ``` in the terminal
+10) Change back into the main project folder by entering this command: ``` cd .. ```
+11) Change into the ``` client ``` folder and run the command to install the dependencies:
+    ```
+    cd client
+    npm i
+    ```
+12) Start the front-end server by entering ``` npm run dev ```
+13) A message will with the url that you would enter in your web browser
+14) Cloudy should now be running locally on your device!
 
 
 
