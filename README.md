@@ -3,7 +3,10 @@ A single page website that brings the user current and and five-day weather fore
 their current location or a city that they choose to look up. This application uses
 the openweathermap API the retrieve weather data from a specified location.
 
-API used: https://openweathermap.org/
+## Technologies and services used
+  *  Express.js (https://expressjs.com/)
+  *  React.js   (https://react.dev/)
+  *  Openweathermap API (https://openweathermap.org/)
 
 ## Project structure
 The project is devided into two folders: sever and client. The sever folder and client folder.
@@ -25,11 +28,6 @@ for Boone, NC, while they recieved the forecast for Boone, IL instead.
 
 I plan to create a dedicated react component to handle user input so the user
 can specify the location they would like to see the weather for.
-
-
-## Technologies used
-  *  Express.js (https://expressjs.com/)
-  *  React.js   (https://react.dev/)
 
 ## How to run on your computer
 
