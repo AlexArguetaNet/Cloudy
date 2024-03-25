@@ -29,7 +29,7 @@ for Boone, NC, while they recieved the forecast for Boone, IL instead.
 I plan to create a dedicated react component to handle user input so the user
 can specify the location they would like to see the weather for.
 
-## How to run on your computer
+## How to run locally
 
 As of March 13, 2024, Cloudy is not available on the internet yet. However,
 you can still run it locally on your desktop or laptop computer. Below are the
